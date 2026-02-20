@@ -1,8 +1,10 @@
 import { useForm } from "react-hook-form";
 import { Mail, Lock, Eye, EyeOff, ArrowRight } from "lucide-react";
 import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { motion } from "framer-motion";
+import useAuthStore from "../../context/useAuthStore";
 
 /* -------- Background Blob -------- */
 const Blob = ({ className }) => (
@@ -10,10 +12,18 @@ const Blob = ({ className }) => (
 );
 
 export default function Login() {
+  // ✅ ALL HOOKS INSIDE COMPONENT
   const { register, handleSubmit } = useForm();
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
+  const { login } = useAuthStore();
 
-  const onSubmit = () => toast.success("Logged in successfully");
+  // ✅ submit handler ALSO inside component
+  const onSubmit = (data) => {
+    login({ email: data.email });
+    toast.success("Logged in successfully");
+    navigate("/dashboard");
+  };
 
   return (
     <div className="min-h-screen grid md:grid-cols-2 bg-[#05060a] text-white overflow-hidden">
@@ -56,7 +66,6 @@ export default function Login() {
           className="w-full max-w-md bg-white/5 backdrop-blur-xl
           rounded-2xl p-10 border border-white/10"
         >
-
           <h2 className="text-2xl font-semibold">Sign in</h2>
           <p className="text-sm text-gray-400 mt-1">
             Access your AI workspace
@@ -75,12 +84,8 @@ export default function Login() {
                   placeholder="you@company.com"
                   className="w-full pl-9 pr-3 py-2.5 text-sm
                   bg-black/40 rounded-lg border border-white/10
-                  placeholder-gray-500
-                  transition-all duration-300
-                  focus:placeholder-transparent
-                  focus:border-violet-400 focus:ring-2
-                  focus:ring-violet-400/20 outline-none
-                  group-hover:border-white/30"
+                  placeholder-gray-500 focus:border-violet-400 focus:ring-2
+                  focus:ring-violet-400/20 outline-none"
                 />
               </div>
             </div>
@@ -96,61 +101,41 @@ export default function Login() {
                   placeholder="Enter your password"
                   className="w-full pl-9 pr-9 py-2.5 text-sm
                   bg-black/40 rounded-lg border border-white/10
-                  placeholder-gray-500
-                  transition-all duration-300
-                  focus:placeholder-transparent
-                  focus:border-violet-400 focus:ring-2
-                  focus:ring-violet-400/20 outline-none
-                  group-hover:border-white/30"
+                  placeholder-gray-500 focus:border-violet-400 focus:ring-2
+                  focus:ring-violet-400/20 outline-none"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2
-                  text-gray-500 hover:text-white transition"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
                 >
                   {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
                 </button>
               </div>
             </div>
 
-            {/* BUTTON */}
             <motion.button
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
               type="submit"
-              className="relative w-full overflow-hidden py-2.5 rounded-lg
-              font-medium text-sm
-              bg-gradient-to-r from-violet-500 to-cyan-500
-              shadow-lg shadow-violet-500/30
-              hover:shadow-cyan-500/40 transition-all"
+              className="w-full py-2.5 rounded-lg text-sm font-medium
+              bg-gradient-to-r from-violet-500 to-cyan-500"
             >
-              <span className="relative z-10">Continue</span>
+              Continue
             </motion.button>
           </form>
 
-          {/* SIGNUP BOX */}
-          <motion.div
-            whileHover={{ y: -3 }}
-            className="mt-10 p-4 rounded-xl
-            bg-black/40 border border-white/10
-            hover:border-violet-400/50
-            hover:shadow-lg hover:shadow-violet-500/20
-            transition"
-          >
-            <p className="text-xs text-gray-400">
-              New to AdVantage Gen?
-            </p>
-            <button className="mt-2 flex items-center gap-2 text-sm
-              font-medium text-violet-400 hover:text-cyan-400 transition">
-              Create a free account
-              <ArrowRight size={16} />
-            </button>
-          </motion.div>
-
-          <p className="mt-6 text-[11px] text-gray-600 text-center">
-            © 2026 AdVantage Gen
-          </p>
+          {/* SIGNUP LINK */}
+          <div className="mt-10">
+            <p className="text-xs text-gray-400">New to AdVantage Gen?</p>
+            <Link
+              to="/signup"
+              className="mt-2 inline-flex items-center gap-2
+              text-sm font-medium text-violet-400"
+            >
+              Create a free account <ArrowRight size={16} />
+            </Link>
+          </div>
         </motion.div>
       </div>
     </div>
