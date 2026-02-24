@@ -6,6 +6,7 @@ import {
   Image,
   FileText,
   CreditCard,
+  History as HistoryIcon,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -50,15 +51,19 @@ export default function Dashboard() {
       >
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-4xl font-semibold tracking-tight
+            <h1
+              className="text-4xl font-semibold tracking-tight
               bg-gradient-to-r from-violet-400 to-cyan-400
-              bg-clip-text text-transparent">
+              bg-clip-text text-transparent"
+            >
               AdVantage Gen
             </h1>
 
-            <p className="mt-2 text-sm font-medium
+            <p
+              className="mt-2 text-sm font-medium
               bg-gradient-to-r from-violet-300 to-cyan-300
-              bg-clip-text text-transparent">
+              bg-clip-text text-transparent"
+            >
               AI-powered ad generation studio
             </p>
 
@@ -67,16 +72,34 @@ export default function Dashboard() {
             </p>
           </div>
 
-          <button
-            onClick={logout}
-            className="flex items-center gap-2 text-sm
-            px-4 py-2 rounded-lg
-            bg-red-500/10 text-red-400
-            hover:bg-red-500 hover:text-white transition"
-          >
-            <LogOut size={16} />
-            Logout
-          </button>
+          {/* RIGHT ACTIONS */}
+          <div className="flex items-center gap-3">
+
+            {/* ✅ HISTORY BUTTON (ADDED ONLY) */}
+            <button
+              onClick={() => navigate("/history")}
+              className="flex items-center gap-2 text-sm
+              px-4 py-2 rounded-lg
+              bg-white/10 text-gray-300
+              hover:bg-violet-500/30 hover:text-white
+              transition"
+            >
+              <HistoryIcon size={16} />
+              History
+            </button>
+
+            {/* LOGOUT (UNCHANGED) */}
+            <button
+              onClick={logout}
+              className="flex items-center gap-2 text-sm
+              px-4 py-2 rounded-lg
+              bg-red-500/10 text-red-400
+              hover:bg-red-500 hover:text-white transition"
+            >
+              <LogOut size={16} />
+              Logout
+            </button>
+          </div>
         </div>
       </motion.div>
 
@@ -113,7 +136,6 @@ export default function Dashboard() {
           </h2>
 
           <div className="grid md:grid-cols-2 gap-6">
-
             {/* INPUT SIDE */}
             <div className="space-y-4">
               <textarea
@@ -149,7 +171,6 @@ export default function Dashboard() {
                 focus:ring-violet-400/20 outline-none"
               />
 
-              {/* PRIMARY BUTTON (unchanged) */}
               <motion.button
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
@@ -166,20 +187,23 @@ export default function Dashboard() {
 
             {/* PREVIEW SIDE */}
             <div className="space-y-4">
-              <div className="h-40 rounded-lg bg-black/40
+              <div
+                className="h-40 rounded-lg bg-black/40
                 border border-white/10
                 flex items-center justify-center
-                text-gray-500 text-sm">
+                text-gray-500 text-sm"
+              >
                 Image Preview
               </div>
 
-              <div className="h-32 rounded-lg bg-black/40
+              <div
+                className="h-32 rounded-lg bg-black/40
                 border border-white/10
-                p-3 text-sm text-gray-400">
+                p-3 text-sm text-gray-400"
+              >
                 Generated ad copy will appear here...
               </div>
 
-              {/* ✅ EDIT IN STUDIO – NOW SAME HOVER EFFECT */}
               <motion.button
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
