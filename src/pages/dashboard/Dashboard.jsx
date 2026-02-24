@@ -7,6 +7,7 @@ import {
   FileText,
   CreditCard,
 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 /* ---------- Background Blob ---------- */
 const Blob = ({ className }) => (
@@ -31,15 +32,16 @@ const Card = ({ children }) => (
 
 export default function Dashboard() {
   const { user, logout } = useAuthStore();
+  const navigate = useNavigate();
 
   return (
     <div className="relative min-h-screen bg-[#05060a] text-white px-6 py-8 overflow-hidden">
 
-      {/* ========== BACKGROUND BLOBS ========== */}
+      {/* BACKGROUND */}
       <Blob className="w-[420px] h-[420px] bg-violet-600 -top-20 -left-20" />
       <Blob className="w-[360px] h-[360px] bg-cyan-500 bottom-10 right-10" />
 
-      {/* ========== HEADER / BRAND ========== */}
+      {/* HEADER */}
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
@@ -48,19 +50,15 @@ export default function Dashboard() {
       >
         <div className="flex items-center justify-between">
           <div>
-            <h1
-              className="text-4xl font-semibold tracking-tight
+            <h1 className="text-4xl font-semibold tracking-tight
               bg-gradient-to-r from-violet-400 to-cyan-400
-              bg-clip-text text-transparent"
-            >
+              bg-clip-text text-transparent">
               AdVantage Gen
             </h1>
 
-            <p
-              className="mt-2 text-sm font-medium
+            <p className="mt-2 text-sm font-medium
               bg-gradient-to-r from-violet-300 to-cyan-300
-              bg-clip-text text-transparent"
-            >
+              bg-clip-text text-transparent">
               AI-powered ad generation studio
             </p>
 
@@ -74,8 +72,7 @@ export default function Dashboard() {
             className="flex items-center gap-2 text-sm
             px-4 py-2 rounded-lg
             bg-red-500/10 text-red-400
-            hover:bg-red-500 hover:text-white
-            transition"
+            hover:bg-red-500 hover:text-white transition"
           >
             <LogOut size={16} />
             Logout
@@ -83,7 +80,7 @@ export default function Dashboard() {
         </div>
       </motion.div>
 
-      {/* ========== STATS ========== */}
+      {/* STATS */}
       <div className="relative z-10 grid md:grid-cols-3 gap-6 mb-12">
         <Card>
           <p className="text-2xl font-semibold">42</p>
@@ -107,7 +104,7 @@ export default function Dashboard() {
         </Card>
       </div>
 
-      {/* ========== PROMPT GENERATOR ========== */}
+      {/* PROMPT GENERATOR */}
       <div className="relative z-10">
         <Card>
           <h2 className="font-semibold mb-4 flex items-center gap-2">
@@ -152,9 +149,11 @@ export default function Dashboard() {
                 focus:ring-violet-400/20 outline-none"
               />
 
+              {/* PRIMARY BUTTON (unchanged) */}
               <motion.button
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
+                onClick={() => navigate("/ad-studio")}
                 className="w-full py-2.5 rounded-lg
                 font-medium text-sm
                 bg-gradient-to-r from-violet-500 to-cyan-500
@@ -167,35 +166,38 @@ export default function Dashboard() {
 
             {/* PREVIEW SIDE */}
             <div className="space-y-4">
-              <div
-                className="h-40 rounded-lg bg-black/40
+              <div className="h-40 rounded-lg bg-black/40
                 border border-white/10
                 flex items-center justify-center
-                text-gray-500 text-sm"
-              >
+                text-gray-500 text-sm">
                 Image Preview
               </div>
 
-              <div
-                className="h-32 rounded-lg bg-black/40
+              <div className="h-32 rounded-lg bg-black/40
                 border border-white/10
-                p-3 text-sm text-gray-400"
-              >
+                p-3 text-sm text-gray-400">
                 Generated ad copy will appear here...
               </div>
 
-              <button
-                className="w-full py-2 rounded-lg text-sm
-                bg-white/10 hover:bg-white/20 transition"
+              {/* ✅ EDIT IN STUDIO – NOW SAME HOVER EFFECT */}
+              <motion.button
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+                onClick={() => navigate("/ad-studio")}
+                className="w-full py-2.5 rounded-lg
+                font-medium text-sm
+                bg-gradient-to-r from-violet-500 to-cyan-500
+                shadow-lg shadow-violet-500/30
+                hover:shadow-cyan-500/40 transition"
               >
-                Edit in Studio
-              </button>
+                Edit in Studio →
+              </motion.button>
             </div>
           </div>
         </Card>
       </div>
 
-      {/* ========== RECENT CAMPAIGNS ========== */}
+      {/* RECENT */}
       <div className="relative z-10 mt-12">
         <Card>
           <h3 className="font-semibold mb-2">Recent Campaigns</h3>
